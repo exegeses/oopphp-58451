@@ -5,6 +5,16 @@
         private $idRegion;
         private $regNombre;
 
+        public function listarRegiones()
+        {
+            $link = Conexion::conectar();
+            $sql  = "SELECT idRegion, regNombre
+                        FROM regiones";
+            $stmt = $link->prepare($sql);
+            $stmt->execute();
+            $regiones = $stmt->fetchAll();
+            return $regiones;
+        }
 
 
         ###### GETTERS && SETTERS

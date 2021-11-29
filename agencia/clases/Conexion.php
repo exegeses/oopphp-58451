@@ -14,5 +14,6 @@
                 'root',
                 'root'
             );
+            return self::$link;
         }
     }
