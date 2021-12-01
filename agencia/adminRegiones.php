@@ -31,12 +31,12 @@
                 <td><?= $row['idRegion'] ?></td>
                 <td><?= $row['regNombre'] ?></td>
                 <td>
-                    <a href="formModificarRegion.php" class="btn btn-outline-secondary">
+                    <a href="formModificarRegion.php?idRegion=<?= $row['idRegion'] ?>" class="btn btn-outline-secondary">
                         Modificar <i class="far fa-edit ml-1"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="formEliminarRegion.php" class="btn btn-outline-secondary">
+                    <a href="formEliminarRegion.php?idRegion=<?= $row['idRegion'] ?>" class="btn btn-outline-secondary">
                         Eliminar <i class="far fa-minus-square ml-1"></i>
                     </a>
                 </td>

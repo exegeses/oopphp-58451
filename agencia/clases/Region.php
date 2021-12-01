@@ -12,10 +12,52 @@
                         FROM regiones";
             $stmt = $link->prepare($sql);
             $stmt->execute();
-            $regiones = $stmt->fetchAll();
+            $regiones = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $regiones;
         }
 
+        private function cargarDesdeArray( $arr )
+        {
+            $this->setIdRegion($arr['idRegion']);
+            $this->setRegNombre($arr['regNombre']);
+        }
+
+        public function verRegionPorId()
+        {
+            $idRegion = $_GET['idRegion'];
+            $link = Conexion::conectar();
+            $sql  = "SELECT idRegion, regNombre
+                        FROM regiones
+                        WHERE idRegion = :id";
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':id', $idRegion, PDO::PARAM_INT);
+            $stmt->execute();
+            $region = $stmt->fetch(PDO::FETCH_ASSOC);
+            //registramos valores de los atributos
+            /*$this->setIdRegion($region['idRegion']);
+            $this->setRegNombre($region['regNombre']);*/
+            $this->cargarDesdeArray( $region );
+            return $this;
+        }
+
+        public function modificarRegion()
+        {
+            $regNombre = $_POST['regNombre'];
+            $idRegion  = $_POST['idRegion'];
+            $link = Conexion::conectar();
+            $sql  = "UPDATE regiones 
+                        SET regNombre = :regNombre
+                        WHERE idRegion = :id";
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':regNombre', $regNombre, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $idRegion, PDO::PARAM_INT);
+            if ( $stmt->execute() ){
+                $this->setRegNombre( $regNombre );
+                $this->setIdRegion( $idRegion );
+                return $this;
+            }
+            return false;
+        }
 
         ###### GETTERS && SETTERS
         /**
