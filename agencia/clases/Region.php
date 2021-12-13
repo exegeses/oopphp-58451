@@ -40,6 +40,33 @@
             return $this;
         }
 
+        public function agregarRegion()
+        {
+            $regNombre = $_POST['regNombre'];
+            $link = Conexion::conectar();
+            $sql = "INSERT INTO regiones
+                            ( regNombre )
+                        VALUE
+                            ( :regNombre )";
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':regNombre', $regNombre, PDO::PARAM_STR);
+            try{
+                $stmt->execute();
+                //registramos atributos
+                $this->setIdRegion( $link->lastInsertId() );
+                $this->setRegNombre( $regNombre );
+                return $this;
+            }catch ( PDOException $e ){
+                /*
+                 * log de excepciones
+                echo date('d/m/Y H:i:s');
+                echo $e->getMessage();
+                echo $e->getFile();
+                echo $e->getLine();*/
+                return false;
+            }
+        }
+        
         public function modificarRegion()
         {
             $regNombre = $_POST['regNombre'];
@@ -51,12 +78,21 @@
             $stmt = $link->prepare($sql);
             $stmt->bindParam(':regNombre', $regNombre, PDO::PARAM_STR);
             $stmt->bindParam(':id', $idRegion, PDO::PARAM_INT);
-            if ( $stmt->execute() ){
+            try{
+                $stmt->execute();
                 $this->setRegNombre( $regNombre );
                 $this->setIdRegion( $idRegion );
                 return $this;
+            }catch ( PDOException $e ){
+                /*
+                 * log de excepciones
+                echo date('d/m/Y H:i:s');
+                echo $e->getMessage();
+                echo $e->getFile();
+                echo $e->getLine();*/
+                return false;
             }
-            return false;
+
         }
 
         ###### GETTERS && SETTERS
