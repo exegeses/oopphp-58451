@@ -29,9 +29,9 @@
     else{
 ?>
         <div class="alert bg-light p-4 col-6 mx-auto shadow text-danger">
-            Se eliminará la región: <span class="lead"><?= 'RegNombre' ?></span>
+            Se eliminará la región: <span class="lead"><?= $region->getRegNombre() ?></span>
             <form action="eliminarRegion.php" method="post">
-                <input type="hidden" name="regID" value="<?= 'ID' ?>">
+                <input type="hidden" name="regID" value="<?= $region->getIdRegion() ?>">
                 <button class="btn btn-danger my-3 px-4">Confirmar baja</button>
                 <a href="adminRegiones.php" class="btn btn-outline-secondary">
                     Volver a panel de regiones

@@ -102,11 +102,26 @@
             $sql = "SELECT 1 
                         FROM destinos 
                         WHERE idRegion = :idRegion";
-            $stmt = $link->prepare($sql);
-            $stmt->bindParam(':idRegion', $idRegion , PDO::PARAM_INT);
-            $stmt->execute();
-            $cantidad = $stmt->rowCount();
-            return $cantidad;
+            try{
+                $stmt = $link->prepare($sql);
+                $stmt->bindParam(':idRegion', $idRegion , PDO::PARAM_INT);
+                $stmt->execute();
+                $cantidad = $stmt->rowCount();
+                return $cantidad;
+            }catch ( PDOException $e ){
+                /*
+                 * log de excepciones
+                */
+                //redirección
+                $fh = fopen('logs/errores.log', 'a+');
+                $mensaje = "\n" . date('d/m/Y H:i:s'). "\n";
+                $mensaje .= $e->getMessage(). "\n";
+                $mensaje .= 'Archivo: '. $e->getFile(). "\n";
+                $mensaje .= 'Línea nro: '.$e->getLine(). "\n\n\r";
+                fwrite($fh, $mensaje);
+                fclose($fh);
+                //redirección
+            }
         }
 
         public function confirmarBaja()

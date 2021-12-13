@@ -1,0 +1,13 @@
+
+13/12/2021 18:09:48
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'agenciaoop.destinosx' doesn't exist
+/Users/marcos/Documents/Cursos/OOP-PHP/oopphp-58451/agencia/clases/Region.php
+108
+
+
+13/12/2021 18:19:54
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'agenciaoop.destinosx' doesn't exist
+Archivo: /Users/marcos/Documents/Cursos/OOP-PHP/oopphp-58451/agencia/clases/Region.php
+Línea nro: 108
+
+
