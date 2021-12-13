@@ -95,6 +95,27 @@
 
         }
 
+        private function verificarDestino()
+        {
+            $idRegion = $_GET['idRegion'];
+            $link = Conexion::conectar();
+            $sql = "SELECT 1 
+                        FROM destinos 
+                        WHERE idRegion = :idRegion";
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':idRegion', $idRegion , PDO::PARAM_INT);
+            $stmt->execute();
+            $cantidad = $stmt->rowCount();
+            return $cantidad;
+        }
+
+        public function confirmarBaja()
+        {
+            $this->verRegionPorId();
+            $cantidad = $this->verificarDestino();
+            return $cantidad;
+        }
+
         ###### GETTERS && SETTERS
         /**
          * @return mixed
