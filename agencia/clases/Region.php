@@ -2,6 +2,7 @@
 
     class Region
     {
+        use Validacion;
         private $idRegion;
         private $regNombre;
 
@@ -43,6 +44,11 @@
         public function agregarRegion()
         {
             $regNombre = $_POST['regNombre'];
+            $this->validar(
+                            [
+                                'regNombre'=>[ 'required|min:3|max:30' ]
+                            ]
+                        );
             $link = Conexion::conectar();
             $sql = "INSERT INTO regiones
                             ( regNombre )
@@ -112,7 +118,6 @@
                 /*
                  * log de excepciones
                 */
-                //redirección
                 $fh = fopen('logs/errores.log', 'a+');
                 $mensaje = "\n" . date('d/m/Y H:i:s'). "\n";
                 $mensaje .= $e->getMessage(). "\n";
@@ -129,6 +134,32 @@
             $this->verRegionPorId();
             $cantidad = $this->verificarDestino();
             return $cantidad;
+        }
+
+        public function eliminarRegion()
+        {
+            $idRegion = $_POST['idRegion'];
+            $link = Conexion::conectar();
+            $sql = "DELETE FROM regiones
+                        WHERE idRegion = :idRegion";
+            /*$sql = "UPDATE regiones
+                        SET activo = 0
+                        WHERE idRegion = :idRegion";*/
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':idRegion', $idRegion, PDO::PARAM_INT);
+            try{
+                $stmt->execute();
+                return $this;
+            }catch ( PDOException $e ){
+                /*
+                 * log de excepciones
+                echo date('d/m/Y H:i:s');
+                echo $e->getMessage();
+                echo $e->getFile();
+                echo $e->getLine();*/
+                return false;
+            }
+
         }
 
         ###### GETTERS && SETTERS

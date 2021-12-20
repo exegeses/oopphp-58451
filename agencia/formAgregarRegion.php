@@ -26,7 +26,25 @@
 
             </div>
 
-
+        <?php
+            if ( isset( $_SESSION['errors'] ) ){
+        ?>
+            <div class="alert alert-danger round col-8 mx-auto p-4">
+                <ul>
+            <?php
+                foreach ( $_SESSION['errors'] as $error ){
+            ?>
+                    <li><?= $error ?></li>
+            <?php
+                }                
+            ?>        
+                </ul>
+            </div>
+        <?php
+                unset( $_SESSION['errors'] );
+            }
+        ?>
+                
     </main>
 <?php
     include 'includes/footer.php';
