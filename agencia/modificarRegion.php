@@ -2,6 +2,7 @@
     require 'config/config.php';
 
     require 'clases/Conexion.php';
+    require 'clases/Validacion.php';
     require 'clases/Region.php';
     $region = new Region;
     $chequeo = $region->modificarRegion();

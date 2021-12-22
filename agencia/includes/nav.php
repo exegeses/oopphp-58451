@@ -3,7 +3,7 @@
             <!-- brand -->
             <a href="#" class="navbar-brand text-dark text-decoration-none">
                 <i class="bi bi-globe2"></i>
-                PHP Tavel
+                PHP Travel
             </a>
             <!-- navegación -->
             <nav class="navbar">
