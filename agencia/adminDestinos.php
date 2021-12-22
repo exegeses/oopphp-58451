@@ -1,6 +1,9 @@
 <?php
     require 'config/config.php';
-
+    require 'clases/Conexion.php';
+    require 'clases/Destino.php';
+    $destino = new Destino();
+    $destinos = $destino->listarDestinos();
     include 'includes/header.html';
     include 'includes/nav.php';
 ?>
@@ -24,25 +27,29 @@
             </tr>
             </thead>
             <tbody>
-
+<?php
+        foreach ( $destinos as $row ){
+?>  
             <tr>
-                <td>nombre</td>
-                <td>region</td>
-                <td>$precio</td>
-                <td>asientos</td>
-                <td>disponibles</td>
+                <td><?= $row['destNombre'] ?></td>
+                <td><?= $row['regNombre'] ?></td>
+                <td>$<?= $row['destPrecio'] ?></td>
+                <td><?= $row['destAsientos'] ?></td>
+                <td><?= $row['destDisponibles'] ?></td>
                 <td>
-                    <a href="formModificarDestino.php" class="btn btn-outline-secondary">
+                    <a href="formModificarDestino.php?idDestino=<?= $row['idDestino'] ?>" class="btn btn-outline-secondary">
                         Modificar <i class="far fa-edit ml-1"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="formEliminarDestino.php" class="btn btn-outline-secondary">
+                    <a href="formEliminarDestino.php?idDestino=<?= $row['idDestino'] ?>" class="btn btn-outline-secondary">
                         Eliminar <i class="far fa-minus-square ml-1"></i>
                     </a>
                 </td>
             </tr>
-
+<?php
+        }
+?>
             </tbody>
         </table>
 

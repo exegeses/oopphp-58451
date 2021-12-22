@@ -1,0 +1,85 @@
+<?php
+    require 'config/config.php';
+    require 'clases/Conexion.php';
+    require 'clases/Validacion.php';
+    require 'clases/Region.php';
+    $region = new Region;
+    $regiones = $region->listarRegiones();
+    include 'includes/header.html';
+    include 'includes/nav.php';
+?>
+    
+    <main class="container">
+            <h1>Alta de un destino</h1>
+
+            <div class="alert bg-light border border-white shadow round col-8 mx-auto p-4">
+
+                <form action="agregarDestino.php" method="post">
+
+                    <div class="form-group mb-2">
+                    <label for="destNombre">Nombre del Destino:</label>
+                    <input type="text" name="destNombre" 
+                           id="destNombre" class="form-control"
+                           required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                    <label for="idRegion">Región</label>
+                    <select name="idRegion" id="idRegion"
+                            class="form-control" required>
+                        <option value="">Seleccione una región</option>
+<?php
+            foreach ( $regiones as $row ){
+?>
+                        <option value="<?= $row['idRegion'] ?>"><?= $row['regNombre'] ?></option>
+<?php
+            }
+?>
+                    </select>
+                    </div>
+
+                    <div class="form-group  mb-2">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" name="destPrecio"
+                                   class="form-control" placeholder="Ingrese el precio" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">#</div>
+                            </div>
+                            <input type="number" name="destAsientos"
+                                   class="form-control" placeholder="Ingrese cantidad de Asientos Totales" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">#</div>
+                            </div>
+                            <input type="number" name="destDisponibles"
+                                   class="form-control" placeholder="Ingrese cantidad de Asientos Disponibles" required>
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-dark">Agregar destino</button>
+                    <a href="adminDestinos.php" class="btn btn-outline-secondary">
+                        Volver a panel de destinos
+                    </a>
+
+                </form>
+
+            </div>
+
+
+    </main>
+<?php
+    include 'includes/footer.php';
+?>
