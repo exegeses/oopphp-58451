@@ -62,6 +62,41 @@
             }
             return false;
         }
+
+        private function cargarDatosDesdeArray( $arr )
+        {
+            $this->setIdDestino( $arr['idDestino'] );
+            $this->setDestNombre( $arr['destNombre'] );
+            $this->setIdRegion( $arr['idRegion'] );
+            self::setRegNombre( $arr['regNombre'] );
+            $this->setDestPrecio( $arr['destPrecio'] );
+            $this->setDestAsientos( $arr['destAsientos'] );
+            $this->setDestDisponibles( $arr['destDisponibles'] );
+            $this->setDestActivo( 1 );
+        }
+
+        public function verDestinoPorID()
+        {
+            $idDestino = $_GET['idDestino'];
+            $link = Conexion::conectar();
+            $sql  =  "SELECT idDestino,
+                            destNombre,
+                            d.idRegion,
+                            regNombre,
+                            destPrecio,
+                            destAsientos,
+                            destDisponibles
+                        FROM destinos d, regiones r
+                        WHERE d.idRegion = r.idRegion
+                          AND idDestino = :idDestino";
+            $stmt = $link->prepare($sql);
+            $stmt->bindParam(':idDestino', $idDestino, PDO::PARAM_INT);
+            $stmt->execute();
+            $destino = $stmt->fetch(PDO::FETCH_ASSOC);
+            //registrar todos los atributos del objeto
+            $this->cargarDatosDesdeArray( $destino );
+            return $this;
+        }
         
         /**
          * @return mixed
